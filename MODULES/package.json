@@ -1,0 +1,22 @@
+{
+  "name": "node-modules",
+  "version": "1.0.0",
+  "description": "node modules examples",
+  "main": "index.js",
+  "dependencies": {
+    "expressjs": "^1.0.1",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "mocha": "^6.2.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "node",
+    "npm"
+  ],
+  "author": "Hidran Arias",
+  "license": "ISC"
+}
