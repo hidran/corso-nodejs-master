@@ -1,0 +1,11 @@
+node_modules
+.vscode
+/.idea/codeStyles/Project.xml
+/.idea/.gitignore
+/.idea/composerJson.xml
+/.idea/dbnavigator.xml
+/.idea/jsLibraryMappings.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/nodejs-master.iml
+/.idea/vcs.xml
