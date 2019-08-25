@@ -1,4 +1,4 @@
-const https = require('https');
+const request = require('request');
 
 const{WEATHERURL, STATUS_CODE} = require('./constants');
 const {processResponse} = require('./functions');
@@ -6,11 +6,20 @@ const {processResponse} = require('./functions');
 const city = process.argv[2] || '';
 
 try{
-const req = https.get(WEATHERURL + city, resp =>{
-
+const req = request(WEATHERURL + city, (error,resp, body) => {
+    if(error){
+        console.log(error.toString());
+        return;
+    }
      switch(resp.statusCode){
          case 200:
-             processResponse(resp);
+             const weatherObj = JSON.parse(body);
+             const descr = weatherObj.weather[0].description;
+             const minTemp = weatherObj.main.temp_min;
+             const maxTemp = weatherObj.main.temp_max;
+             output = 'Il tempo oggi è: ' + descr;
+             output += '.Temperature tra ' + minTemp + ' e ' + maxTemp;
+             console.log(output);
              break;
          case 401:
              console.log('Please, verify your APP ID');
