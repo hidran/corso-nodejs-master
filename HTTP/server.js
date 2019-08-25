@@ -16,28 +16,28 @@ http.createServer((req, resp) =>{
          case '/getWeather':
              console.log('getWeatherapi')
              const params = {};
-             if(query.city){
+             if(query.city && !query.zip ){
                  params.q = query.city;
              }
              if(query.zip){
-                 params.zip = query.zip;
+                 params.zip = query.zip + ',IT';
              }
              if(query.lang){
-                 params.zip = query.lang;
+                 params.lang = query.lang;
              }
              console.log(params);
              axios.get(WEATHER_API,{
                   params
 
              } ).then(weather =>{
-                 resp.writeHead(200,{'Conten-Type' : 'application/json'});
+                 resp.writeHead(200,{'Content-Type' : 'application/json'});
                 resp.end(JSON.stringify(weather.data));
 
              })
                  .catch( error =>{
                      console.log(error.toString())
                      resp.writeHead(500);
-                     resp.end(error.toString());
+                     resp.end(error.response.data.message);
                  })
              break;
          default:
