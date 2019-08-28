@@ -14,9 +14,9 @@ http.createServer((req, resp) =>{
              index.pipe(resp);
              break;
          case '/getWeather':
-             console.log('getWeatherapi')
+             console.log('getWeatherapi');
              const params = {};
-             if(query.city && !query.zip ){
+             if(query.city && !query.zip    ){
                  params.q = query.city;
              }
              if(query.zip){
@@ -35,10 +35,10 @@ http.createServer((req, resp) =>{
 
              })
                  .catch( error =>{
-                     console.log(error.toString())
+                     console.log(error.toString());
                      resp.writeHead(500);
                      resp.end(error.response.data.message);
-                 })
+                 });
              break;
          default:
              resp.writeHead(400);
