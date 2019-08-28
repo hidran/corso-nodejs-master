@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <title>WEATHER API</title>
+    <style>
+        #response{
+            display: none;
+        }
+        .container-fluid{
+            max-width: 1100px;
+        }
+    </style>
+    <script>
+      function  searchCity(f){
+          let div =  document.querySelector('#response');
+
+          fetch('http://localhost:2000/getWeather?city=' + f.city.value.trim())
+              .then(res=>res.json())
+              .then(resp =>{
+                  div.style.display='table';
+                  let cityname = document.querySelector('#cityname');
+                  cityname.innerHTML = resp.name;
+                  let weather = document.querySelector('#weather');
+                  weather.innerHTML = resp.weather[0].description;
+                  let temp = document.querySelector('#temp');
+                  temp.innerHTML = resp.main.temp;
+                  let tempmin = document.querySelector('#min-temp');
+                  tempmin.innerHTML = resp.main.temp_min
+                  let tempmax = document.querySelector('#max-temp');
+                  tempmax.innerHTML = resp.main.temp_max
+
+              });
+          return false;
+        }
+    </script>
+</head>
+<body>
+<div class="container-fluid">
+<h1  class="text-center">WHAT'S THE WEATHER LIKE TODAY?</h1>
+<form onsubmit="return(searchCity(this))">
+    <div class="form-group">
+        <label for="city">CITY</label>
+        <input class="form-control" name="city" id="city">
+    </div>
+    <div class="form-group">
+        <label for="city">POST CODE</label>
+        <input class="form-control" name="zipcode"  id="zipcode">
+
+    </div>
+    <div class="form-group text-center">
+    <button class="btn btn-success">SEND</button>
+    </div>
+</form>
+<table id="response" class="table table-dark">
+   <tr>
+       <th>CITY</th><th>TEMPO</th><th>TEMP</th><th>MIN </th><th>MAX </th>
+   </tr>
+    <tr>
+        <td id="cityname"></td>
+        <td id="weather"></td>
+        <td  id="temp"></td>
+        <td  id="min-temp"></td>
+        <td  id="max-temp"></td>
+    </tr>
+</table>
+</div>
+</body>
+</html>
