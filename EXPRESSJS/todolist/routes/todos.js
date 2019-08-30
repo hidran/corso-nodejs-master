@@ -15,7 +15,8 @@ router.get('/', (req, res)=>{
   res.json(getTodos());
 });
 router.get('/:id([0-9]+)',  [logger, (req, res)=>{
-    res.json(getTodoById(req.params.id));
+    const result = getTodoById(req.params.id);
+    res.status(result? 200: 404).json(result? result: null);
 }]);
 
 router.delete('/:id([0-9]+)', (req, res)=>{
