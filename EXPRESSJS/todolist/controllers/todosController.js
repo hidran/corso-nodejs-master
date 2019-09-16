@@ -1,31 +1,34 @@
-const data = require('../data');
+const pool = require('../db');
 
-function getTodos() {
-    return data.todos;
+async function  getTodos() {
+    const [result,] = await pool.query('SELECT * FROM todos');
+    return result;
 }
-function getTodoById( id) {
-    return data.todos.find(todo => todo.id == id);
+async function  getTodosByListId(list_id) {
+    const [result,] = await pool.query('SELECT * FROM todos where list_id',[list_id]);
+    return result;
 }
-function deleteTodo( id) {
-    const idx = data.todos.findIndex(todo => todo.id == id);
-     if(idx> -1){
-        const ele =  data.todos.splice(idx,1);
-         return ele;
-     }
-     return 0;
+async function getTodoById( id) {
+    const [result,] = await pool.query('SELECT * FROM todos where id=?',[id]);
+     return result[0];
 }
-function addTodo({todo, completed, list}){
-    const newtodo = {todo, completed, list}
-     data.todos.unshift(newtodo);
-    return newtodo;
+async function deleteTodo( id) {
+    const [result,] = await pool.query('DELETE FROM todos where id=?',[id]);
+    return result.affectedRows ;
 }
-function updateTodo(id, newTodo){
-    const oldTodo = getTodoById(id);
-    if(oldTodo){
-        data.todos[id] ={...oldTodo, ...newTodo};
-        return  data.todos[id];
-    }
-    return false;
+async function addTodo({todo, completed, list_id}){
+    const created_at = new Date();
+    const [result,] = await pool.query('INSERT INTO todos (todo,  completed,list_id,created_at) values (?,?,?,?)',[todo,completed,list_id,created_at]);
+
+    //  const list =  await getListById(result.insertId) ;
+    return {id: result.insertId, todo, created_at, list_id};
+}
+async function updateTodo(id, {todo, list_id, completed}){
+    console.log(todo, list_id);
+    completed = completed || 0;
+    const updated_at = new Date();
+    const [result,] = await pool.query('UPDATE  todos SET todo =?, updated_at=?, list_id=?,completed= ? where id=?',[todo, updated_at,list_id,completed, id]);
+    return getTodoById(id);
 
 }
 module.exports = {
@@ -34,4 +37,4 @@ module.exports = {
     deleteTodo,
     addTodo,
     updateTodo
-}
+};

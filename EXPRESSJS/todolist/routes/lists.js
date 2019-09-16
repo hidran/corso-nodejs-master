@@ -6,12 +6,14 @@ const { updateList, addList,deleteList, getListById, getLists} = require('../con
 router.get('/', async (req, res)=>{
     try{
         const result = await getLists();
+
         res.json(result);
     } catch (e) {
         res.status(500).send(e.toString());
     }
 
 });
+
 router.get('/:id([0-9]+)', async (req, res)=>{
     try {
         const result = await getListById(req.params.id);
@@ -23,7 +25,7 @@ router.get('/:id([0-9]+)', async (req, res)=>{
 
 router.delete('/:id([0-9]+)', async (req, res)=>{
     try {
-        const deleted = await deleteList(req.params.id)
+        const deleted = await deleteList(req.params.id);
         res.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     }catch (e) {
         res.status(500).send(e.toString());
