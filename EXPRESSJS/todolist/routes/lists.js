@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { updateList, addList,deleteList, getListById, getLists} = require('../controllers/listsController');
 
-
+const {getTodosByListId} = require('../controllers/todosController');
 router.get('/', async (req, res)=>{
     try{
         const result = await getLists();
@@ -14,6 +14,16 @@ router.get('/', async (req, res)=>{
 
 });
 
+router.get('/:list_id([0-9]+)/todos', async (req, res)=>{
+    try{
+        const result = await getTodosByListId(req.params.list_id);
+
+        res.json(result);
+    } catch (e) {
+        res.status(500).send(e.toString());
+    }
+
+});
 router.get('/:id([0-9]+)', async (req, res)=>{
     try {
         const result = await getListById(req.params.id);
