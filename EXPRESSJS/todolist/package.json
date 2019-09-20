@@ -1,7 +1,7 @@
 {
   "name": "todolist",
   "version": "1.0.0",
-  "description": "",
+  "description": "a nodejs todo list",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,13 +11,17 @@
     "express",
     "todolist express"
   ],
-  "author": "",
+  "author": "Hidran Arias:hidran@gmail.com",
   "license": "ISC",
   "dependencies": {
     "@types/express": "github:types/express",
+    "bcrypt": "^3.0.6",
     "express": "^4.17.1",
     "mysql": "^2.17.1",
     "mysql2": "^1.7.0",
-    "sequelize": "^5.18.4"
+    "nodemon": "^1.19.2",
+    "sequelize": "^5.18.4",
+    "to": "^0.2.9",
+    "update": "^0.7.4"
   }
 }
