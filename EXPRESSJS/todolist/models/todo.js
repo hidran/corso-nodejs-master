@@ -3,14 +3,19 @@ module.exports = (sequelize, DataTypes) => {
   const todo = sequelize.define('todo', {
     id: {
       allowNull: false,
-      type: Sequelize.BIGINT(12)
+      type: DataTypes.BIGINT(12),
+      primaryKey: true
+    },
+    completed:{
+      type:DataTypes.BOOLEAN,
+      allowNull: false
     },
     todo: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     listId: {
-      type: Sequelize.BIGINT(12),
+      type: DataTypes.BIGINT(12),
       allowNull: false
     }
   }, {});

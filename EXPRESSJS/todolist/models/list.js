@@ -3,14 +3,15 @@ module.exports = (sequelize, DataTypes) => {
   const list = sequelize.define('List', {
     id: {
       allowNull: false,
-      type: Sequelize.BIGINT(12)
+      type: DataTypes.BIGINT(12),
+      primaryKey: true
     },
     name: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
       allowNull: false
     },
     userId: {
-      type: Sequelize.BIGINT(12),
+      type: DataTypes.BIGINT(12),
       allowNull: false
 
   }
