@@ -14,12 +14,14 @@ module.exports = {
       },
       userId: {
         type: Sequelize.BIGINT(12),
-        allowNull: false,
+       // allowNull: false,
         index: true,
         references: {
           model: 'users',
           key: 'id'
-        }
+        },
+        onDelete : 'CASCADE',
+        onUpdate : 'SET NULL'
       },
       createdAt: {
         allowNull: false,

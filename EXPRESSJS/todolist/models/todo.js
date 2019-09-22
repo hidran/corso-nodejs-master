@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  const todo = sequelize.define('todo', {
+  const todo = sequelize.define('Todo', {
     id: {
       allowNull: false,
       type: DataTypes.BIGINT(12),

@@ -1,18 +1,20 @@
 
-const pool = require('../db');
-
+const List = require('../models').List;
+const  attributes = ['id','name','userId','createdAt'];
 async function getLists() {
 
-   const [result,] = await pool.query('SELECT * FROM lists');
-   return result;
+  return  List.findAll({
+      attributes,
+      limit: 20
+  });
+
 }
 async function getListById( id) {
-    const [result,] = await pool.query('SELECT * FROM lists where id=?',[id]);
-    return result[0];
+    return  List.findByPk(id, { attributes: ['id','name','userId','createdAt']});
 }
 async function deleteList( id) {
-    const [result,] = await pool.query('DELETE FROM lists where id=?',[id]);
-    return result.affectedRows ;
+   return  List.destroy({where:{id}});
+
 }
 async function addList(name){
     const created_at = new Date();

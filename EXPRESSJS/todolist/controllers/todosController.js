@@ -1,4 +1,4 @@
-const pool = require('../db');
+const Todo = require('../models').Todo;
 
 async function  getTodos() {
     const [result,] = await pool.query('SELECT * FROM todos');
@@ -6,8 +6,11 @@ async function  getTodos() {
 }
 
 async function  getTodosByListId(list_id) {
-    const [result,] = await pool.query('SELECT * FROM todos where list_id',[list_id]);
-    return result;
+    return  Todo.findAll({
+        attributes: ['id','todo','listId','createdAt'],
+        limit: 20,
+        where:{listId: list_id}
+    });
 }
 async function getTodoById( id) {
     const [result,] = await pool.query('SELECT * FROM todos where id=?',[id]);
