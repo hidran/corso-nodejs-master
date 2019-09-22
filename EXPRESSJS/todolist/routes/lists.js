@@ -54,7 +54,7 @@ router.post('/', async (req, res)=>{
 router.patch('/:id([0-9]+)', async (req, res)=>{
    try {
        const updList =await updateList(req.params.id, req.body.name);
-       res.status(updList ? 200: 404).json(updList ? updList : ' Record not found');
+       res.status(updList[0] ? 200: 404).json(updList[0] ? updList[0] : ' Record not found');
    }catch (e) {
        res.status(500).send(e.toString());
    }

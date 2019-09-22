@@ -50,7 +50,7 @@ router.post('/', async (req, res)=>{
 router.patch('/:id([0-9]+)', async (req, res)=>{
     try {
         const result = await updateTodo(req.params.id, req.body);
-        res.status(result ? 200 : 404).json(result ? result : null);
+        res.status(result[0] ? 200 : 404).json(result[0] ? result[0] : null);
     }catch (e) {
         res.status(500).send(e.toString());
     }
