@@ -1,1 +1,10 @@
-<h1>EXPRESS TODO LIST</h1>
+<h1>EXPRESS TODO LISTS</h1>
+<ul>
+    {{#each lists}}
+        <li>
+       <a href="/lists/{{this.id}}/todos">
+           {{this.name}}
+       </a>
+        </li>
+    {{/each}}
+</ul>

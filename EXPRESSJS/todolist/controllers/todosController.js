@@ -1,12 +1,13 @@
 const Todo = require('../models').Todo;
 const attributes =['id','todo','listId','createdAt'];
 async function  getTodos() {
-    return Todo.findAll({attributes, limit:20});
+    return Todo.findAll({ include : ['List'],attributes, limit:20});
 }
 
 async function  getTodosByListId(list_id) {
     return  Todo.findAll({
         attributes,
+        include : ['List'],
         limit: 20,
         where:{listId: list_id}
     });

@@ -8,11 +8,12 @@ const ehb = require('express-handlebars');
 
 app.engine('.hbs', ehb({extname:'.hbs'}));
 app.set('view engine','.hbs');
-const todosRoutes  = require('./routes/todos');
-const listsRoutes  = require('./routes/lists');
+const todosRoutes  = require('./routes/api/todos');
+const listsRoutes  = require('./routes/api/lists');
 
-app.use('/todos', todosRoutes);
-app.use('/lists',listsRoutes );
+app.use('/api/todos', todosRoutes);
+app.use('/api/lists',listsRoutes );
+app.use('/lists', require('./routes/lists'));
 app.get('/',(req,res) =>{
     res.render('index');
 });

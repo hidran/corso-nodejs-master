@@ -21,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {});
   todo.associate = function(models) {
-    // associations can be defined here
+    todo.belongsTo(models.List);
   };
   return todo;
 };

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { updateTodo, addTodo,deleteTodo, getTodoById, getTodos} = require('../controllers/todosController');
+const { updateTodo, addTodo,deleteTodo, getTodoById, getTodos} = require('../../controllers/todosController');
 const logger = (req, res, next) =>{
    if(req.params.id>100){
        next(new Error('id cannot be > 100'));
