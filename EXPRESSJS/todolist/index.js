@@ -13,8 +13,6 @@ const listsRoutes  = require('./routes/api/lists');
 
 app.use('/api/todos', todosRoutes);
 app.use('/api/lists',listsRoutes );
-app.use('/lists', require('./routes/lists'));
-app.get('/',(req,res) =>{
-    res.render('index');
-});
+app.use(['/lists','/'], require('./routes/lists'));
+
 app.listen(4000, ()=> console.log('listening on port 4000'));
