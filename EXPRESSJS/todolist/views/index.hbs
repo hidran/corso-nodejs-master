@@ -1,11 +1,20 @@
 <h1>EXPRESS TODO LISTS</h1>
-<ul>
+<ul  class="list-group">
     {{#each lists}}
-        <li>
+        <li class="list-group-item d-flex justify-content-between align-items-center row">
+     <div class="col-md-9">
        <a href="/lists/{{this.id}}/todos">
            {{this.name}}
        </a>
-            {{this.dataValues.total}}
+            <span class="badge badge-danger badge-pill ">   {{this.dataValues.total}}</span>
+     </div>
+            <div class="col-md-3">
+            <button class="btn btn-success">UPDATE</button>
+                <form method="post" action="/lists/{{this.id}}" style="display: inline">
+                    <input type="hidden" name="_method" value="DELETE">
+            <button class="btn btn-danger">DELETE</button>
+                </form>
+            </div>
         </li>
     {{/each}}
 </ul>

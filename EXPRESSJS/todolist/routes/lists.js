@@ -23,4 +23,13 @@ router.get('/:list_id([0-9]+)/todos', async (req, res)=>{
     }
 
 });
+router.delete('/:list_id([0-9]+)', async (req,resp) =>{
+    try{
+     const deleted = await list.deleteList(req.params.list_id);
+     resp.redirect('/');
+       // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
+    } catch (e) {
+       // resp.status(500).send(e.toString());
+    }
+});
 module.exports = router;
