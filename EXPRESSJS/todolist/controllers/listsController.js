@@ -23,7 +23,7 @@ async function getLists() {
 
 }
 async function getListById( id) {
-    return  List.findByPk(id, { attributes});
+    return  List.findByPk(id);
 }
 async function deleteList( id) {
    return  List.destroy({where:{id}});

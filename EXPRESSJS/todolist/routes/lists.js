@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const list = require('../controllers/listsController');
 const {getTodosByListId} = require('../controllers/todosController');
+
 router.get('/', async (req, res)=>{
     try{
         const result = await list.getLists();
@@ -11,6 +12,19 @@ router.get('/', async (req, res)=>{
     }
 
 });
+router.get('/:list_id([0-9]+)/edit', async (req, res)=>{
+    try{
+        const listId = req.params.list_id;
+        const listObj = await list.getListById(listId);
+        const values = listObj.dataValues;
+
+        res.render('list/edit', {...values});
+    } catch (e) {
+        res.status(500).send(e.toString());
+    }
+
+});
+
 router.get('/:list_id([0-9]+)/todos', async (req, res)=>{
     try{
         const listId = req.params.list_id;
@@ -30,6 +44,15 @@ router.delete('/:list_id([0-9]+)', async (req,resp) =>{
        // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
        // resp.status(500).send(e.toString());
+    }
+});
+router.patch('/:list_id([0-9]+)', async (req,resp) =>{
+    try{
+        const updated = await list.updateList(req.params.list_id, req.body.list_name);
+        resp.redirect('/');
+        // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
+    } catch (e) {
+        // resp.status(500).send(e.toString());
     }
 });
 module.exports = router;

@@ -1,0 +1,29 @@
+<script>
+    function updateList(btn) {
+
+        const method = document.getElementById('method');
+        const form = document.getElementById('list');
+        btn.value === 'DELETE' ? method.value = 'DELETE': method.value = 'PATCH';
+        form.submit();
+
+    }
+</script>
+<form method="post" action="/lists/{{this.id}}" name="list"  id="list">
+    <div class="row">
+        <div class="col-md-9 form-group">
+            <input class="form-control" name="list_name" value="{{name}}">
+        </div>
+        <div class="col-md-3">
+            <button value="UPDATE" onclick="updateList(this); return false" class="btn btn-success" title="UPDATE LIST">
+                UPDATE
+            </button>
+
+                <input type="hidden" name="_method"  id="method"  value="DELETE">
+                <button value="DELETE" onclick="updateList(this); return false" class="btn btn-danger"  title="DELETE LIST">
+                   DELETE
+
+                </button>
+
+        </div>
+    </div>
+</form>
