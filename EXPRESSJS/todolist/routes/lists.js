@@ -24,7 +24,15 @@ router.get('/:list_id([0-9]+)/edit', async (req, res)=>{
     }
 
 });
+router.get('/new', async (req, res)=>{
+    try{
 
+        res.render('list/newlist');
+    } catch (e) {
+        res.status(500).send(e.toString());
+    }
+
+});
 router.get('/:list_id([0-9]+)/todos', async (req, res)=>{
     try{
         const listId = req.params.list_id;
@@ -49,6 +57,15 @@ router.delete('/:list_id([0-9]+)', async (req,resp) =>{
 router.patch('/:list_id([0-9]+)', async (req,resp) =>{
     try{
         const updated = await list.updateList(req.params.list_id, req.body.list_name);
+        resp.redirect('/');
+        // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
+    } catch (e) {
+        // resp.status(500).send(e.toString());
+    }
+});
+router.post('/', async (req,resp) =>{
+    try{
+        const updated = await list.addList( req.body.list_name);
         resp.redirect('/');
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {

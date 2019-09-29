@@ -18,7 +18,10 @@ async function getLists() {
       include:[
           {model: Todo, attributes:[]}
       ],
-      group: ['List.id']
+      group: ['List.id'],
+      order :[
+          ['createdAt', 'DESC']
+      ]
   });
 
 }
