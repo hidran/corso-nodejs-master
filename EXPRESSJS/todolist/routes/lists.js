@@ -5,8 +5,14 @@ const {getTodosByListId} = require('../controllers/todosController');
 
 router.get('/', async (req, res)=>{
     try{
-        const result = await list.getLists();
-        res.render('index', {lists : result});
+         const {q}  =  req.query;
+        const result = await list.getLists({q});
+        res.render('index', {
+            lists : result,
+            showBackButton: false,
+            q
+        }
+            );
     } catch (e) {
         res.status(500).send(e.toString());
     }
@@ -27,7 +33,7 @@ router.get('/:list_id([0-9]+)/edit', async (req, res)=>{
 router.get('/new', async (req, res)=>{
     try{
 
-        res.render('list/newlist');
+        res.render('list/newlist',{ showBackButton: true});
     } catch (e) {
         res.status(500).send(e.toString());
     }

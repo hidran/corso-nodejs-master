@@ -1,6 +1,7 @@
 
 const List = require('../models').List;
 const Todo = require('../models').Todo;
+const Op = require('../models').Sequelize.Op;
 const  attributes = {
     include:[
         [List.sequelize.fn('COUNT',
@@ -9,19 +10,24 @@ const  attributes = {
     exclude:['createdAt','userId']
 
 };
-async function getLists() {
-
+async function getLists(pars = {}) {
+   const where = pars.q ? {
+       name: {
+           [Op.like] :  '%' + pars.q + '%'
+       }
+   } : {};
   return  List.findAll({
       attributes,
       subQuery: false,
-      limit: 20,
+      limit: 2000,
       include:[
           {model: Todo, attributes:[]}
       ],
       group: ['List.id'],
       order :[
           ['createdAt', 'DESC']
-      ]
+      ],
+      where : where
   });
 
 }
