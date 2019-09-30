@@ -66,7 +66,7 @@ router.patch('/:list_id([0-9]+)', async (req,resp) =>{
         resp.redirect('/');
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
-        // resp.status(500).send(e.toString());
+         resp.status(500).send(e.toString());
     }
 });
 router.post('/', async (req,resp) =>{
@@ -75,7 +75,7 @@ router.post('/', async (req,resp) =>{
         resp.redirect('/');
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
-        // resp.status(500).send(e.toString());
+         resp.status(500).send(e.toString());
     }
 });
 module.exports = router;
