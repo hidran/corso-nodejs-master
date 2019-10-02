@@ -4,13 +4,15 @@ const list = require('../controllers/listsController');
 const {getTodosByListId} = require('../controllers/todosController');
 
 router.get('/', async (req, res)=>{
+
     try{
          const {q}  =  req.query;
         const result = await list.getLists({q});
         res.render('index', {
             lists : result,
             showBackButton: false,
-            q
+            q,
+           message: req.flash('success')
         }
             );
     } catch (e) {
@@ -19,6 +21,7 @@ router.get('/', async (req, res)=>{
 
 });
 router.get('/:list_id([0-9]+)/edit', async (req, res)=>{
+    console.log('userid=' + req.session.userId );
     try{
         const listId = req.params.list_id;
         const listObj = await list.getListById(listId);
@@ -72,10 +75,12 @@ router.patch('/:list_id([0-9]+)', async (req,resp) =>{
 router.post('/', async (req,resp) =>{
     try{
         const updated = await list.addList( req.body.list_name);
+        req.flash('success','List added!')
         resp.redirect('/');
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
-         resp.status(500).send(e.toString());
+        resp.redirect('/?error= ' + e.toString());
+        // resp.status(500).send(e.toString());
     }
 });
 module.exports = router;

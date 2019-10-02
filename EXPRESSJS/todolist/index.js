@@ -1,5 +1,26 @@
 const express = require('express');
 const app = express();
+const session = require('express-session');
+const flash = require('connect-flash');
+// configure session
+const MAX_AGE = process.env.MAX_AGE ||  60*60*1000;
+const SECRET = process.env.SECRET ||  'Our beautiful secret';
+DEFAULT_ENV = process.env.DEFAULT_ENV || 'development';
+app.use(session({
+    cookie: {
+        maxAge:MAX_AGE,
+        secure : DEFAULT_ENV === 'production'
+    },
+
+    secret :SECRET,
+    resave: false,
+    saveUninitialized: false,
+}));
+app.use(flash());
+app.use((req, resp, next)=>{
+    req.session.userId = 1;
+    next();
+});
 // C R U D
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());

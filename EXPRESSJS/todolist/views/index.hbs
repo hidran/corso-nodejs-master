@@ -1,4 +1,10 @@
 <h1>EXPRESS TODO LISTS</h1>
+{{#if message}}
+    {{message}}
+{{/if}}
+{{#if error}}
+    {{error}}
+{{/if}}
 {{>newlist}}
 <ul  class="list-group">
     {{#each lists}}
