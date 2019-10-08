@@ -24,7 +24,10 @@ app.use((req, resp, next)=>{
 // C R U D
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
-app.use(express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use(express.static(__dirname + '/public'));
+app.use('/bootstrap',express.static(__dirname + '/node_modules/bootstrap/dist'));
+app.use('/sweetalert2',express.static(__dirname + '/node_modules/sweetalert2/dist'));
+app.use(express.static(__dirname + '/public'));
 const ehb = require('express-handlebars');
 const methodOverride = require('method-override');
 app.engine('.hbs', ehb({extname:'.hbs'}));

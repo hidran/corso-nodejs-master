@@ -12,7 +12,8 @@ router.get('/', async (req, res)=>{
             lists : result,
             showBackButton: false,
             q,
-           message: req.flash('success')
+           errors: req.flash('errors'),
+                messages: req.flash('messages')
         }
             );
     } catch (e) {
@@ -26,8 +27,8 @@ router.get('/:list_id([0-9]+)/edit', async (req, res)=>{
         const listId = req.params.list_id;
         const listObj = await list.getListById(listId);
         const values = listObj.dataValues;
-
-        res.render('list/edit', {...values});
+        const errors = req.flash('errors');
+        res.render('list/edit', {...values, errors});
     } catch (e) {
         res.status(500).send(e.toString());
     }
@@ -57,29 +58,34 @@ router.get('/:list_id([0-9]+)/todos', async (req, res)=>{
 router.delete('/:list_id([0-9]+)', async (req,resp) =>{
     try{
      const deleted = await list.deleteList(req.params.list_id);
+     req.flash('messages','List deleted correclty!');
      resp.redirect('/');
        // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
-       // resp.status(500).send(e.toString());
+        req.flash('errors', e.errors.map(ele => ele.message));
+        resp.redirect('/');
     }
 });
 router.patch('/:list_id([0-9]+)', async (req,resp) =>{
     try{
         const updated = await list.updateList(req.params.list_id, req.body.list_name);
+        req.flash('messages','List modified correctly!')
         resp.redirect('/');
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
-         resp.status(500).send(e.toString());
+        req.flash('errors', e.errors.map(ele => ele.message));
+        resp.redirect(req.params.list_id + '/edit');
     }
 });
 router.post('/', async (req,resp) =>{
     try{
         const updated = await list.addList( req.body.list_name);
-        req.flash('success','List added!')
+        req.flash('messages','List added!')
         resp.redirect('/');
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
-        resp.redirect('/?error= ' + e.toString());
+       req.flash('errors', e.errors.map(ele => ele.message));
+        resp.redirect('/');
         // resp.status(500).send(e.toString());
     }
 });
