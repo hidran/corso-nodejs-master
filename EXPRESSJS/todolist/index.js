@@ -39,12 +39,15 @@ app.use(methodOverride(function (req, res) {
         delete req.body._method
         return method
     }
-}))
+}));
+
+// routes management
 const todosRoutes  = require('./routes/api/todos');
 const listsRoutes  = require('./routes/api/lists');
-
+const autRoutes = require('./routes/auth');
 app.use('/api/todos', todosRoutes);
 app.use('/api/lists',listsRoutes );
+app.use('/auth', autRoutes);
 app.use(['/lists','/'], require('./routes/lists'));
 
 app.listen(4000, ()=> console.log('listening on port 4000'));
