@@ -28,6 +28,7 @@ module.exports = (sequelize, DataTypes) => {
   }, {});
   list.associate = function(models) {
    list.hasMany(models.Todo);
+   list.belongsTo(models.User);
   };
   return list;
 };

@@ -1,21 +1,47 @@
-<h2>TODO LIST LOGIN</h2>
-<form>
-    <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" class="form-control" id="name"  placeholder="Enter name">
+<script>
+   async function registerUser(f) {
 
-    </div>
-    <div class="form-group">
-        <label for="email">Email address</label>
-        <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
-               name="email"
-               placeholder="Enter email">
-        <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-    </div>
-    <div class="form-group">
-        <label for="password">Password</label>
-        <input type="password" class="form-control" id="password"  name="password" placeholder="Password">
-    </div>
+       try {
+           const res = await axios.post('/auth/register',
+                   {
+                       name: f.name.value,
+                       email: f.email.value,
+                       password: f.password.value,
+                   }
+           );
+           console.log(res.data)
+       } catch (e) {
+          console.log(e.response.data.message)
+           Swal.fire(e.response.data.message)
+       }
+    }
+</script>
+<div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+    <h2>TODO LIST LOGIN</h2>
+    <form action="/auth/register" method="post" onsubmit="registerUser(this);return false">
 
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" name="name" class="form-control" id="name" placeholder="Enter name">
+
+        </div>
+        <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp"
+                   name="email"
+                   placeholder="Enter email">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group text-center">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+    </div>
+    <div class="col-md-3"></div>
+</div>

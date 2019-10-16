@@ -18,13 +18,15 @@ app.use(session({
 }));
 app.use(flash());
 app.use((req, resp, next)=>{
-    req.session.userId = 1;
+    //req.session.userId = 1;
     next();
 });
 // C R U D
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+// static files
 app.use(express.static(__dirname + '/public'));
+app.use('/axios',express.static(__dirname + '/node_modules/axios/dist'));
 app.use('/bootstrap',express.static(__dirname + '/node_modules/bootstrap/dist'));
 app.use('/sweetalert2',express.static(__dirname + '/node_modules/sweetalert2/dist'));
 app.use(express.static(__dirname + '/public'));
