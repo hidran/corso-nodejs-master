@@ -10,11 +10,21 @@ router.get('/signup', async (req, res)=>{
 
 
 });
+router.get('/login', async (req, res)=>{
+
+    res.render('login', {
+            signup : false
+        }
+    );
+
+
+});
 router.post('/register', async (req, res)=>{
     try{
-        const updated = await auth.register(req.body);
-
-         res.status(updated ? 200 : 404).json(updated ? updated : null);
+        const {name,email, id} = await auth.register(req.body);
+        const User = {name,email, id};
+        req.session.user = User;
+         res.status(id ? 200 : 404).json(id ? User : null);
     } catch (e) {
         const errorMessages = e.errors.map(error => error.message).join('\n');
          res.status(500).send({message: errorMessages});
