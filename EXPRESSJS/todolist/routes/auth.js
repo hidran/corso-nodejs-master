@@ -16,8 +16,8 @@ router.post('/register', async (req, res)=>{
 
          res.status(updated ? 200 : 404).json(updated ? updated : null);
     } catch (e) {
-
-         res.status(500).send({message:e.toString()});
+        const errorMessages = e.errors.map(error => error.message).join('\n');
+         res.status(500).send({message: errorMessages});
     }
 
 

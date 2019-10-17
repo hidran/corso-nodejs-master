@@ -9,7 +9,10 @@
                        password: f.password.value,
                    }
            );
-           console.log(res.data)
+          Swal.fire({
+            type : 'success',
+              text: 'User successfully registered'
+          }).then(() =>{location.href ='/'});
        } catch (e) {
           console.log(e.response.data.message)
            Swal.fire(e.response.data.message)
