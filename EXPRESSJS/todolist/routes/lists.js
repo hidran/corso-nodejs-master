@@ -11,7 +11,7 @@ router.get('/', async (req, res)=>{
         res.render('index', {
             lists : result,
             showBackButton: false,
-            q,
+            user: req.session.user,
            errors: req.flash('errors'),
                 messages: req.flash('messages')
         }
@@ -28,7 +28,10 @@ router.get('/:list_id([0-9]+)/edit', async (req, res)=>{
         const listObj = await list.getListById(listId);
         const values = listObj.dataValues;
         const errors = req.flash('errors');
-        res.render('list/edit', {...values, errors});
+        res.render('list/edit', {
+            ...values, errors,
+            user: req.session.user
+        });
     } catch (e) {
         res.status(500).send(e.toString());
     }
@@ -37,7 +40,10 @@ router.get('/:list_id([0-9]+)/edit', async (req, res)=>{
 router.get('/new', async (req, res)=>{
     try{
 
-        res.render('list/newlist',{ showBackButton: true});
+        res.render('list/newlist',{
+            showBackButton: true,
+            user: req.session.user
+        });
     } catch (e) {
         res.status(500).send(e.toString());
     }
@@ -49,7 +55,11 @@ router.get('/:list_id([0-9]+)/todos', async (req, res)=>{
         const listObj = await list.getListById(listId);
         console.log(list)
         const result = await getTodosByListId(listId);
-        res.render('todos', {todos : result, list_name: listObj.name});
+        res.render('todos', {
+            todos : result, list_name: listObj.name,
+                user: req.session.user
+        }
+            );
     } catch (e) {
         res.status(500).send(e.toString());
     }

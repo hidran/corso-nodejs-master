@@ -3,7 +3,8 @@
     <!-- Fixed navbar -->
     <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
         <a class="navbar-brand" href="#">MY TODO LIST</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -17,10 +18,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/todos">Todos</a>
                 </li>
-
+                {{#if user}}
+                    <li class="nav-item nav-link">{{user.name}}</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/logout">Logout</a>
+                    </li>
+                {{else }}
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/login">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/auth/signup">Signup</a>
+                    </li>
+                {{/if}}
             </ul>
-            <form  class="form-inline mt-2 mt-md-0" method="get">
-                <input value="{{q}}" class="form-control mr-sm-2" name="q" type="text" placeholder="Search" aria-label="Search">
+            <form class="form-inline mt-2 mt-md-0" method="get">
+                <input value="{{q}}" class="form-control mr-sm-2" name="q" type="text" placeholder="Search"
+                       aria-label="Search">
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                 <button onclick="this.parentNode.q.value=''" class="btn btn-outline-secondary ml-2">RESET</button>
             </form>

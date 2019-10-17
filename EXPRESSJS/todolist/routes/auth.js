@@ -19,6 +19,14 @@ router.get('/login', async (req, res)=>{
 
 
 });
+router.get('/logout', async (req, res)=>{
+      req.session.destroy(() =>{
+          res.redirect('/auth/login');
+      });
+
+
+
+});
 router.post('/register', async (req, res)=>{
     try{
         const {name,email, id} = await auth.register(req.body);
