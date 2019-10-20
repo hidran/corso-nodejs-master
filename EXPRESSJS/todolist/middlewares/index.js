@@ -1,5 +1,8 @@
 const methodOverride = require('method-override');
 const session = require('express-session');
+const FileStore = require('session-file-store')(session);
+
+const fileStoreOptions = {};
 const DEFAULT_ENV = process.env.DEFAULT_ENV || 'development';
 const MAX_AGE = process.env.MAX_AGE ||  60*60*1000;
 const SECRET = process.env.SECRET ||  'Our beautiful secret';
@@ -20,12 +23,12 @@ const  redirectLogin = (req, resp, next)=>{
 };
 const setSession = () => {
      return   session({
+         store: new FileStore(fileStoreOptions),
             cookie: {
                 maxAge: MAX_AGE,
                 secure: DEFAULT_ENV === 'production'
             },
-
-            secret: SECRET,
+           secret: SECRET,
             resave: false,
             saveUninitialized: false,
         });
