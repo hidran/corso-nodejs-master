@@ -7,7 +7,8 @@ router.get('/', async (req, res)=>{
 
     try{
          const {q}  =  req.query;
-        const result = await list.getLists({q});
+        const {id} = req.session.user;
+        const result = await list.getLists({q, userId: id});
         res.render('index', {
             lists : result,
             showBackButton: false,
@@ -52,9 +53,11 @@ router.get('/new', async (req, res)=>{
 router.get('/:list_id([0-9]+)/todos', async (req, res)=>{
     try{
         const listId = req.params.list_id;
+        let completed = req.query.completed?req.query.completed: 0 ;
+
         const listObj = await list.getListById(listId);
-        console.log(list)
-        const result = await getTodosByListId(listId);
+
+        const result = await getTodosByListId(listId, completed );
         res.render('todos', {
             todos : result, list_name: listObj.name,
                 user: req.session.user
@@ -89,7 +92,10 @@ router.patch('/:list_id([0-9]+)', async (req,resp) =>{
 });
 router.post('/', async (req,resp) =>{
     try{
-        const updated = await list.addList( req.body.list_name);
+        const updated = await list.addList(
+            req.body.list_name,
+            req.session.user.id
+        );
         req.flash('messages','List added!')
         resp.redirect('/');
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);

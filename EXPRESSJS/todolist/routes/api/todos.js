@@ -53,9 +53,12 @@ router.patch('/:id([0-9]+)', async (req, res)=>{
         const id = req.params.id;
         const todo = await getTodoById(id);
         if(!todo){
-            res.send(404);
+            res.send(404,{message:'Todo not found'});
         }
-        console.log(todo.List.dataValues);
+        // User is not authorized to modify this resource
+        if(+req.session.user.id !== +todo.List.userId){
+            res.send(403,{message:'User is not authorized to modify this todo'});
+        }
         const result = await updateTodo(id, {...todo,...req.body});
         res.status(result[0] ? 200 : 404).json(result[0] ? result[0] : null);
     }catch (e) {

@@ -38,7 +38,9 @@
         <li class="list-group-item"  id="li-{{this.todo}}">
             <div class="form-check">
                 <button class="btn btn-default">
-                    <span completed = "{{this.completed}}" id="spn-{{this.id}}" class="fa fa-square-o"></span>
+                    <span completed = "{{this.completed}}" id="spn-{{this.id}}" class="fa {{#if this.completed}}fa-check {{else}} fa-square-o {{/if}}">
+
+                    </span>
                 </button>
                 <label class="form-check-label" for="defaultCheck1">
                     {{this.todo}}

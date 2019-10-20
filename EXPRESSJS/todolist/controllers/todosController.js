@@ -10,6 +10,7 @@ async function  getTodosByListId(list_id, completed = null) {
     if(completed !== null){
         where.completed = completed;
     }
+
     return  Todo.findAll({
         attributes,
         include : ['List'],

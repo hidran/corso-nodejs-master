@@ -11,11 +11,15 @@ const  attributes = {
 
 };
 async function getLists(pars = {}) {
-   const where = pars.q ? {
-       name: {
+    const where = {};
+   if (pars.q ) {
+       where.name= {
            [Op.like] :  '%' + pars.q + '%'
-       }
-   } : {};
+       };
+   }
+    if (pars.userId ) {
+        where.userId= pars.userId;
+    }
   return  List.findAll({
       attributes,
       subQuery: false,
@@ -38,8 +42,8 @@ async function deleteList( id) {
    return  List.destroy({where:{id}});
 
 }
-async function addList(name){
-    return List.create({ userId:1, name});
+async function addList(name, userId ){
+    return List.create({ name,userId});
 
 }
 async function updateList(id, name){
