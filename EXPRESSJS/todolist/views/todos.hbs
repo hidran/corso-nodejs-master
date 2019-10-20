@@ -1,11 +1,44 @@
+<script>
+    async function completeTodo(id, completed){
+        try {
+            const res = await axios.patch('/api/todos/' + id,
+                    {
+                        completed:!completed
+                    }
+            );
+            Swal.fire({
+                type : 'success',
+                text: 'User successfully loggedin'
+            }).then(() =>{location.href ='/'});
+        } catch (e) {
+            console.log(e.response.data.message);
+            Swal.fire(e.response.data.message);
+        }
+    }
+    document.addEventListener('DOMContentLoaded',()=>{
+       const ul = document.querySelector('#todos');
+          if(ul){
+              ul.addEventListener('click', (evt)=>{
+                const eleId =  evt.target.id + '';
+
+                 if(eleId.startsWith('spn-')){
+                     const id = eleId.replace('spn-','')*1;
+                     const completed = evt.target.getAttribute('completed')
+                     completeTodo(id,completed);
+                 }
+              });
+          }
+    });
+
+</script>
 <h1> {{list_name}}</h1>
 {{#if todos}}
-<ul class="list-group list-group-flush">
+<ul class="list-group list-group-flush" id="todos">
     {{#each todos}}
-        <li class="list-group-item">
+        <li class="list-group-item"  id="li-{{this.todo}}">
             <div class="form-check">
                 <button class="btn btn-default">
-                    <span class="fa fa-square-o"></span>
+                    <span completed = "{{this.completed}}" id="spn-{{this.id}}" class="fa fa-square-o"></span>
                 </button>
                 <label class="form-check-label" for="defaultCheck1">
                     {{this.todo}}

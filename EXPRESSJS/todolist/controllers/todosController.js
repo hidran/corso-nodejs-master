@@ -18,7 +18,10 @@ async function  getTodosByListId(list_id, completed = null) {
     });
 }
 async function getTodoById( id) {
-   return Todo.findByPk(id,{attributes});
+   return Todo.findByPk(id,{
+       attributes,
+       include:['List']
+   });
 }
 async function deleteTodo( id) {
     return Todo.destroy({where: id});
