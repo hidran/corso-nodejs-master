@@ -4,7 +4,7 @@ const DEFAULT_ENV = process.env.DEFAULT_ENV || 'development';
 const MAX_AGE = process.env.MAX_AGE ||  60*60*1000;
 const SECRET = process.env.SECRET ||  'Our beautiful secret';
 const  redirectHome = (req, resp, next)=>{
-    if(req.session.user){
+    if(req.session.user && !req.path === '/auth/logout'){
         resp.redirect('/');
     } else {
         next();
@@ -32,14 +32,14 @@ const setSession = () => {
     }
 ;
 const overrideMethods = () =>{
-    return  methodOverride(function (req, res) {
-        console.log('override');
+    return  methodOverride(function (req) {
+
         if (req.body && typeof req.body === 'object' && '_method' in req.body) {
             // look in urlencoded POST bodies and delete it
             var method = req.body._method
-            delete req.body._method
+            delete req.body._method;
             return method
-        }
+        };
     })
 };
 module.exports = {
@@ -47,5 +47,5 @@ module.exports = {
     redirectLogin,
     setSession,
     overrideMethods
-}
+};
 
