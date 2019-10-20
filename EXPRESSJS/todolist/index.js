@@ -35,7 +35,9 @@ const autRoutes = require('./routes/auth');
 app.use('/auth',redirectHome, autRoutes);
 
 app.use('/api/todos', redirectLogin,todosRoutes);
+
 app.use('/api/lists',redirectLogin,listsRoutes );
+
 app.use(['/lists','/'], redirectLogin, require('./routes/lists'));
 
 

@@ -1,10 +1,17 @@
-<h1> TODOS FOR LIST {{list_name}}</h1>
+<h1> {{list_name}}</h1>
 {{#if todos}}
-<ul>
+<ul class="list-group list-group-flush">
     {{#each todos}}
-        <li>
+        <li class="list-group-item">
+            <div class="form-check">
+                <button class="btn btn-default">
+                    <span class="fa fa-square-o"></span>
+                </button>
+                <label class="form-check-label" for="defaultCheck1">
+                    {{this.todo}}
+                </label>
+            </div>
 
-                {{this.todo}}
 
         </li>
 
