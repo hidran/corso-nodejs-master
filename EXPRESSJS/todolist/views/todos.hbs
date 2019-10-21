@@ -32,6 +32,17 @@
 
 </script>
 <h1> {{list_name}}</h1>
+{{#if messages}}
+    {{#each messages}}
+        <div class="alert alert-success">{{this}}</div>
+    {{/each}}
+{{/if}}
+{{#if errors}}
+    {{#each errors}}
+        <div class="alert alert-danger">{{this}}</div>
+    {{/each}}
+{{/if}}
+{{> newtodo}}
 {{#if todos}}
 <ul class="list-group list-group-flush" id="todos">
     {{#each todos}}

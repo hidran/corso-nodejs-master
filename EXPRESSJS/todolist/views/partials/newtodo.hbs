@@ -1,0 +1,32 @@
+<script>
+    function updateList(btn) {
+
+        const method = document.getElementById('method');
+        const form = document.getElementById('todoForm');
+        btn.value === 'DELETE' ? method.value = 'DELETE': method.value = 'PATCH';
+        form.submit();
+
+    }
+</script>
+
+<form method="post" action="/todos" name="todo"  id="todoForm">
+    <input type="hidden" name="listId" value="{{listId}}">
+    <div class="row">
+        <div class="col-md-9 form-group">
+            <input  required minlength="6" placeholder="INSERT NEW TODO" class="form-control" name="todo" value="{{name}}">
+        </div>
+        <div class="col-md-3">
+            <button value="SAVE"  class="btn btn-success" title="INSERT LIST">
+                SAVE
+            </button>
+
+            {{#if showBackButton}}
+                <button value="BACK" onclick="location.href='/todos'" class="btn btn-danger"  title="BACK TO LIST LIST">
+                    BACK
+
+                </button>
+            {{/if}}
+
+        </div>
+    </div>
+</form>
