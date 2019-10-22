@@ -58,10 +58,8 @@ async function deleteTodo(id) {
     return Todo.destroy({where: id});
 }
 
-async function addTodo({todo, completed, listId}) {
-    if(completed === undefined){
-        completed = 0;
-    }
+async function addTodo({todo, completed=0, listId=null}) {
+console.log(todo, completed, listId)
     return Todo.create({todo, completed, listId});
 }
 

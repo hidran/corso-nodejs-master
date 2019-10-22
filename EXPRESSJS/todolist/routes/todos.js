@@ -25,11 +25,12 @@ router.get('/', async (req, res)=>{
 
 });
 router.post('/', async (req,resp) =>{
-    try{
-        const {listId} = req.body;
-        console.log(req.body);
+      try{
+        let {listId, completed} = req.body;
+        listId= listId ?listId : null;
+
         const updated = await todo.addTodo(
-            {...req.body}
+            {...req.body,listId }
         );
         req.flash('messages','Todo added!');
         const todoRoute = listId ? '/' + listId +'/todos' : '/todos';
@@ -37,7 +38,8 @@ router.post('/', async (req,resp) =>{
         // resp.status(deleted ? 200 : 404).json(deleted ? deleted : null);
     } catch (e) {
         console.log(e)
-        req.flash('errors',  e.errors?e.errors.map(ele => ele.message) : e.toString());
+        const errors = e.errors?e.errors.map(ele => ele.message) : [e.toString()]
+        req.flash('errors',  errors);
         resp.redirect('/todos');
         // resp.status(500).send(e.toString());
     }
