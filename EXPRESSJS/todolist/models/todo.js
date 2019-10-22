@@ -8,7 +8,7 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
     completed:{
-      type:DataTypes.BOOLEAN,
+      type:DataTypes.ENUM(0,1),
       allowNull: false
     },
     todo: {

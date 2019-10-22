@@ -1,5 +1,6 @@
 <script>
     async function completeTodo(id, completed){
+
          try {
             const res = await axios.patch('/api/todos/' + id,
                     {
@@ -23,7 +24,7 @@
 
                  if(eleId.startsWith('spn-')){
                      const id = eleId.replace('spn-','')*1;
-                     const completed = evt.target.getAttribute('completed')
+                     const completed = +evt.target.getAttribute('completed')
 
                      completeTodo(id,completed);
                  }
