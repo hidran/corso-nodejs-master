@@ -1,6 +1,28 @@
 <footer class="footer mt-auto py-3 fixed-bottom">
-    <div class="container">
-        <span class="text-muted">Place sticky footer content here.</span>
+    <div class="container" id="filter-buttons">
+        <div class="row">
+            <div class="col-md-4">
+                {{#compare completed '!==' 'ALL'}}
+                    <a href="?q={{q}}&completed=ALL" class="btn btn-success">ALL TODOS</a>
+                {{else}}
+                    <button disabled class="btn btn-outline-secondary">ALL</button>
+                {{/compare}}
+            </div>
+            <div class="col-md-4">
+{{#compare completed '!==' '0'}}
+                <a href="?q={{q}}&completed=0" class="btn btn-success"> TODO</a>
+{{else}}
+    <button disabled class="btn btn-outline-secondary">TO DO</button>
+    {{/compare}}
+            </div>
+            <div class="col-md-4">
+{{#compare completed '!==' '1'}}
+                <a href="?{{q}}&completed=1" class="btn btn-success">COMPLETED</a>
+{{else}}
+    <button disabled class="btn btn-outline-secondary">COMPLETED</button>
+    {{/compare}}
+            </div>
+        </div>
     </div>
 </footer>
 <script src="/axios/axios.min.js"></script>

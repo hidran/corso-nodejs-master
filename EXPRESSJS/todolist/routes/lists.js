@@ -53,8 +53,19 @@ router.get('/new', async (req, res) => {
 router.get('/:list_id([0-9]+)/todos', async (req, res) => {
     try {
         const listId = req.params.list_id;
-        let completed = req.query.completed ? req.query.completed : 0;
+        let {completed, q} = req.query;
+        if(completed !== undefined){
+            req.session.completed = completed;
+        } else {
+            if(req.session.completed){
+                completed = req.session.completed;
+            }
 
+        }
+        const tmpCompleted = completed;
+        if(completed === undefined){
+            completed = 0;
+        }
         const listObj = await list.getListById(listId);
 
         const result = await getTodosByListId(listId, completed);
@@ -66,7 +77,9 @@ router.get('/:list_id([0-9]+)/todos', async (req, res) => {
                 user: req.session.user,
                 listId,
                   user,
-                   lists
+                   lists,
+                  q,
+            completed : tmpCompleted
 
             }
         );

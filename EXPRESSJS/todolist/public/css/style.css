@@ -14,3 +14,8 @@ main > .container {
     padding-right: 15px;
     padding-left: 15px;
 }
+div#filter-buttons button,
+div#filter-buttons a{
+    width:150px;
+    display: inline-block;
+}

@@ -6,18 +6,31 @@ router.get('/', async (req, res)=>{
 
     try{
         let {q, completed}  =  req.query;
-        if(completed === undefined){
+        if(completed !== undefined){
+            req.session.completed = completed;
+        } else {
+            if(req.session.completed){
+                completed = req.session.completed;
+            }
+
+        }
+
+        const tmpCompleted = completed;
+         if(completed === undefined){
             completed = 0;
         }
         const {id} = req.session.user;
 
+         completed = completed ==='ALL'? undefined : completed;
         const lists = await getListByUserId(id);
         const result = await todo.getTodos({q, userId: id, completed});
         res.render('todos', {
                 todos : result,
                 showBackButton: false,
                 user: req.session.user,
-                   lists,
+                   lists,q,
+                  completed:tmpCompleted,
+
                 errors: req.flash('errors'),
                 messages: req.flash('messages')
             }

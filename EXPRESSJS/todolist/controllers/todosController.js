@@ -1,5 +1,6 @@
 const Todo = require('../models').Todo;
 const List = require('../models').List;
+const Op = require('../models').Sequelize.Op;
 const attributes = ['id', 'todo', 'listId', 'createdAt', 'completed'];
 
 async function getTodos(pars = {}) {
