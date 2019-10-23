@@ -38,6 +38,17 @@ async function getLists(pars = {}) {
 async function getListById( id) {
     return  List.findByPk(id);
 }
+async function getListByUserId( userId) {
+    return  List.findAll(
+        {
+            attributes:['id','name'],
+            where: {userId},
+            order:[
+                ['name' ,'ASC']
+            ]
+        }
+    );
+}
 async function deleteList( id) {
    return  List.destroy({where:{id}});
 
@@ -56,5 +67,6 @@ module.exports = {
     getListById,
     deleteList,
     addList,
-    updateList
+    updateList,
+    getListByUserId
 };

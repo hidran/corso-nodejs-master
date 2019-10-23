@@ -58,10 +58,15 @@ router.get('/:list_id([0-9]+)/todos', async (req, res) => {
         const listObj = await list.getListById(listId);
 
         const result = await getTodosByListId(listId, completed);
+        const user = req.session.user;
+        const lists = await list.getListByUserId(user.id);
+
         res.render('todos', {
                 todos: result, list_name: listObj.name,
                 user: req.session.user,
-                listId
+                listId,
+                  user,
+                   lists
 
             }
         );

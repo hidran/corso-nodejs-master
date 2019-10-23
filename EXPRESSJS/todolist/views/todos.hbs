@@ -44,7 +44,7 @@
         <div class="alert alert-danger">{{this}}</div>
     {{/each}}
 {{/if}}
-{{> newtodo}}
+{{> newtodo this}}
 {{#if todos}}
 <ul class="list-group list-group-flush" id="todos">
     {{#each todos}}
@@ -58,6 +58,7 @@
                 <label class="form-check-label" for="defaultCheck1">
                     {{this.todo}}
                 </label>
+
             </div>
 
 

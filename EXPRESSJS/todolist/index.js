@@ -22,8 +22,12 @@ app.use('/bootstrap',express.static(__dirname + '/node_modules/bootstrap/dist'))
 app.use('/sweetalert2',express.static(__dirname + '/node_modules/sweetalert2/dist'));
 app.use(express.static(__dirname + '/public'));
 const ehb = require('express-handlebars');
-
-app.engine('.hbs', ehb({extname:'.hbs'}));
+const helpers = require('handlebars-helpers')();
+app.engine('.hbs', ehb({
+    extname:'.hbs',
+    helpers
+}
+    ));
 app.set('view engine','.hbs');
 
 

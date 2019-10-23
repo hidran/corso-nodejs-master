@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const todo = require('../controllers/todosController');
+const {getListByUserId} = require('../controllers/listsController');
 router.get('/', async (req, res)=>{
 
     try{
@@ -10,11 +11,13 @@ router.get('/', async (req, res)=>{
         }
         const {id} = req.session.user;
 
+        const lists = await getListByUserId(id);
         const result = await todo.getTodos({q, userId: id, completed});
         res.render('todos', {
                 todos : result,
                 showBackButton: false,
                 user: req.session.user,
+                   lists,
                 errors: req.flash('errors'),
                 messages: req.flash('messages')
             }
