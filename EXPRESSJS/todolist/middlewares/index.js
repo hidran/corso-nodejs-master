@@ -1,7 +1,7 @@
 const methodOverride = require('method-override');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
-
+const List = require('../models').List;
 const fileStoreOptions = {};
 const DEFAULT_ENV = process.env.DEFAULT_ENV || 'development';
 const MAX_AGE = process.env.MAX_AGE ||  60*60*1000;
@@ -57,11 +57,30 @@ const  manageFilter = (req,resp,next) =>{
     }
     next();
 };
+const userOwnsList = async (req,resp, next) =>{
+   const listId = req.params.list_id;
+   if(!listId){
+       resp.render('errors/400', {error:'No list id provided'});
+       return;
+   }
+    const listObj = await List.findByPk(listId);
+
+    if(!listObj){
+        resp.render('errors/404',  {error:'No list found'});
+        return;
+    }
+    if(listObj.userId !== req.session.user.id){
+        resp.render('errors/403',  {error:'You are not allowed to see this list'});
+        return;
+    }
+    next();
+};
 module.exports = {
     redirectHome,
     redirectLogin,
     setSession,
     overrideMethods,
-    manageFilter
+    manageFilter,
+    userOwnsList
 };
 

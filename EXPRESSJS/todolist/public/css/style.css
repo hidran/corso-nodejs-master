@@ -1,6 +1,6 @@
 
 .alert{
-    transition: opacity 5s;
+    transition: opacity 10s;
 }
 main > .container {
     padding: 60px 15px 0;

@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const list = require('../controllers/listsController');
 const {getTodosByListId} = require('../controllers/todosController');
-const {manageFilter} = require('../middlewares');
+const {manageFilter, userOwnsList} = require('../middlewares');
 router.get('/', async (req, res) => {
 
     try {
@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     }
 
 });
-router.get('/:list_id([0-9]+)/edit', async (req, res) => {
+router.get('/:list_id([0-9]+)/edit', userOwnsList, async (req, res) => {
     console.log('userid=' + req.session.userId);
     try {
         const listId = req.params.list_id;
@@ -50,7 +50,7 @@ router.get('/new', async (req, res) => {
     }
 
 });
-router.get('/:list_id([0-9]+)/todos',manageFilter, async (req, res) => {
+router.get('/:list_id([0-9]+)/todos',userOwnsList, manageFilter, async (req, res) => {
     try {
         const listId = req.params.list_id;
         let {completed, q} = req.query;
@@ -81,7 +81,7 @@ router.get('/:list_id([0-9]+)/todos',manageFilter, async (req, res) => {
     }
 
 });
-router.delete('/:list_id([0-9]+)', async (req, resp) => {
+router.delete('/:list_id([0-9]+)',userOwnsList, async (req, resp) => {
     try {
         const deleted = await list.deleteList(req.params.list_id);
         req.flash('messages', 'List deleted correclty!');
@@ -92,7 +92,7 @@ router.delete('/:list_id([0-9]+)', async (req, resp) => {
         resp.redirect('/');
     }
 });
-router.patch('/:list_id([0-9]+)', async (req, resp) => {
+router.patch('/:list_id([0-9]+)',userOwnsList, async (req, resp) => {
     try {
         const updated = await list.updateList(req.params.list_id, req.body.list_name);
         req.flash('messages', 'List modified correctly!')
