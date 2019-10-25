@@ -1,5 +1,6 @@
 <footer class="footer mt-auto py-3 fixed-bottom">
-    <div class="container" id="filter-buttons">
+    {{#if showFilter}}
+    <div  class="container" id="filter-buttons">
         <div class="row">
             <div class="col-md-4">
                 {{#compare completed '!==' 'ALL'}}
@@ -24,7 +25,7 @@
             </div>
         </div>
     </div>
-</footer>
+{{/if}}</footer>
 <script src="/axios/axios.min.js"></script>
 
 

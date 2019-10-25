@@ -45,10 +45,23 @@ const overrideMethods = () =>{
         };
     })
 };
+const  manageFilter = (req,resp,next) =>{
+    let  {completed } = req.query;
+    if(completed !== undefined){
+        req.session.completed = completed;
+    } else {
+        if(req.session.completed){
+            req.query.completed = req.session.completed;
+        }
+
+    }
+    next();
+};
 module.exports = {
     redirectHome,
     redirectLogin,
     setSession,
-    overrideMethods
+    overrideMethods,
+    manageFilter
 };
 

@@ -1,19 +1,12 @@
 const express = require('express');
 const router = express.Router();
+const {manageFilter} = require('../middlewares');
 const todo = require('../controllers/todosController');
 const {getListByUserId} = require('../controllers/listsController');
-router.get('/', async (req, res)=>{
+router.get('/', manageFilter, async (req, res)=>{
 
     try{
         let {q, completed}  =  req.query;
-        if(completed !== undefined){
-            req.session.completed = completed;
-        } else {
-            if(req.session.completed){
-                completed = req.session.completed;
-            }
-
-        }
 
         const tmpCompleted = completed;
          if(completed === undefined){
@@ -30,7 +23,7 @@ router.get('/', async (req, res)=>{
                 user: req.session.user,
                    lists,q,
                   completed:tmpCompleted,
-
+            showFilter : 1,
                 errors: req.flash('errors'),
                 messages: req.flash('messages')
             }

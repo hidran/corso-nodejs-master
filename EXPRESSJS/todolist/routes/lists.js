@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const list = require('../controllers/listsController');
 const {getTodosByListId} = require('../controllers/todosController');
-
+const {manageFilter} = require('../middlewares');
 router.get('/', async (req, res) => {
 
     try {
@@ -50,18 +50,10 @@ router.get('/new', async (req, res) => {
     }
 
 });
-router.get('/:list_id([0-9]+)/todos', async (req, res) => {
+router.get('/:list_id([0-9]+)/todos',manageFilter, async (req, res) => {
     try {
         const listId = req.params.list_id;
         let {completed, q} = req.query;
-        if(completed !== undefined){
-            req.session.completed = completed;
-        } else {
-            if(req.session.completed){
-                completed = req.session.completed;
-            }
-
-        }
         const tmpCompleted = completed;
         if(completed === undefined){
             completed = 0;
@@ -79,7 +71,8 @@ router.get('/:list_id([0-9]+)/todos', async (req, res) => {
                   user,
                    lists,
                   q,
-            completed : tmpCompleted
+            completed : tmpCompleted,
+            showFilter : 1
 
             }
         );
