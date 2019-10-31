@@ -59,7 +59,6 @@ router.get('/:list_id([0-9]+)/todos',userOwnsList, manageFilter, async (req, res
             completed = 0;
         }
         const listObj = await list.getListById(listId);
-
         const result = await getTodosByListId(listId, completed);
         const user = req.session.user;
         const lists = await list.getListByUserId(user.id);

@@ -56,7 +56,8 @@ module.exports = (sequelize, DataTypes) => {
         beforeCreate(user) {
           user.password = bc.hashSync(user.password, 12)
         }
-      }
+      },
+        tableName: 'users'
     });
     user.associate = function (models) {
         user.hasMany(models.List);

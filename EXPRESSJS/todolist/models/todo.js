@@ -19,7 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.BIGINT(12),
       allowNull: false
     }
-  }, {});
+  }, { tableName: 'todos'});
   todo.associate = function(models) {
     todo.belongsTo(models.List);
   };

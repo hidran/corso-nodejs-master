@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
 
   }
-  }, {});
+  }, { tableName: 'lists'});
   list.associate = function(models) {
    list.hasMany(models.Todo);
    list.belongsTo(models.User);

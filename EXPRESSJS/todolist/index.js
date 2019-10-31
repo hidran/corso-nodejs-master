@@ -46,4 +46,4 @@ app.use(['/lists','/'], redirectLogin, require('./routes/lists'));
 app.use(['/todos'], redirectLogin, require('./routes/todos'));
 
 
-app.listen(4000, ()=> console.log('listening on port 4000'));
+app.listen(process.env.PORT || 4000, ()=> console.log('listening on port 4000'));
